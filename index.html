@@ -1,0 +1,1160 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nexora — AI untuk Tim Modern</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    :root {
+      --brand: #0A0A0F;
+      --accent: #7B5CF5;
+      --accent-light: #A78BFA;
+      --accent-glow: rgba(123, 92, 245, 0.18);
+      --surface: #13131A;
+      --surface-2: #1C1C28;
+      --text: #F0EFF8;
+      --muted: #8B8AA0;
+      --border: rgba(255,255,255,0.07);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--brand);
+      color: var(--text);
+      overflow-x: hidden;
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    h1, h2, h3, h4, .display-font {
+      font-family: 'Syne', sans-serif;
+      letter-spacing: -0.03em;
+    }
+
+    .navbar {
+      background: rgba(10, 10, 15, 0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 0;
+      position: sticky;
+      top: 0;
+      z-index: 999;
+    }
+
+    .navbar-brand {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.4rem;
+      color: var(--text) !important;
+      letter-spacing: -0.04em;
+    }
+
+    .navbar-brand span { color: var(--accent-light); }
+
+    .nav-link {
+      color: var(--muted) !important;
+      font-size: 0.92rem;
+      font-weight: 500;
+      transition: color 0.2s;
+      padding: 0.4rem 1rem !important;
+    }
+
+    .nav-link:hover { color: var(--text) !important; }
+
+    .btn-nav {
+      background: var(--accent);
+      color: #fff !important;
+      border-radius: 8px;
+      padding: 0.45rem 1.2rem !important;
+      font-weight: 600;
+      font-size: 0.88rem;
+      transition: opacity 0.2s, transform 0.15s;
+    }
+
+    .btn-nav:hover { opacity: 0.88; transform: translateY(-1px); }
+
+    .hero {
+      min-height: 92vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      padding: 6rem 0 4rem;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .hero-blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: 0.35;
+    }
+
+    .blob-1 {
+      width: 700px; height: 700px;
+      background: var(--accent);
+      top: -200px; right: -150px;
+    }
+
+    .blob-2 {
+      width: 400px; height: 400px;
+      background: #2563EB;
+      bottom: -100px; left: -100px;
+    }
+
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+
+    .badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--accent-glow);
+      border: 1px solid rgba(123, 92, 245, 0.35);
+      color: var(--accent-light);
+      border-radius: 100px;
+      padding: 6px 16px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      letter-spacing: 0.02em;
+    }
+
+    .badge-dot {
+      width: 6px; height: 6px;
+      background: var(--accent-light);
+      border-radius: 50%;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    .hero h1 {
+      font-size: clamp(2.8rem, 6vw, 5rem);
+      font-weight: 800;
+      line-height: 1.05;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero h1 .highlight {
+      color: var(--accent-light);
+      position: relative;
+    }
+
+    .hero-desc {
+      font-size: 1.1rem;
+      color: var(--muted);
+      max-width: 500px;
+      line-height: 1.75;
+      margin-bottom: 2.5rem;
+    }
+
+    .btn-primary-custom {
+      background: var(--accent);
+      border: none;
+      color: #fff;
+      padding: 0.85rem 2rem;
+      border-radius: 10px;
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 0.95rem;
+      letter-spacing: 0.01em;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-primary-custom:hover {
+      background: #6548d4;
+      transform: translateY(-2px);
+      color: #fff;
+    }
+
+    .btn-ghost {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      padding: 0.85rem 1.8rem;
+      border-radius: 10px;
+      font-family: 'Syne', sans-serif;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-ghost:hover {
+      border-color: rgba(255,255,255,0.2);
+      color: var(--text);
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 2.5rem;
+      margin-top: 3rem;
+      padding-top: 2.5rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .stat-num {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: var(--text);
+    }
+
+    .stat-label {
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    .hero-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .card-topbar {
+      background: var(--surface-2);
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .dot { width: 10px; height: 10px; border-radius: 50%; }
+    .dot-r { background: #FF5F57; }
+    .dot-y { background: #FEBC2E; }
+    .dot-g { background: #28C840; }
+
+    .card-body-custom { padding: 20px; }
+
+    .msg-row {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 14px;
+      align-items: flex-start;
+    }
+
+    .avatar {
+      width: 30px; height: 30px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .avatar-ai {
+      background: linear-gradient(135deg, var(--accent), #2563EB);
+      color: #fff;
+    }
+
+    .avatar-user {
+      background: var(--surface-2);
+      color: var(--muted);
+      border: 1px solid var(--border);
+    }
+
+    .bubble {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      border-top-left-radius: 4px;
+      padding: 10px 14px;
+      font-size: 0.83rem;
+      color: var(--text);
+      line-height: 1.5;
+      max-width: 80%;
+    }
+
+    .bubble-user {
+      background: var(--accent-glow);
+      border-color: rgba(123, 92, 245, 0.3);
+      border-top-right-radius: 4px;
+      border-top-left-radius: 14px;
+      margin-left: auto;
+    }
+
+    .typing {
+      display: flex;
+      gap: 4px;
+      padding: 14px;
+    }
+
+    .typing span {
+      width: 6px; height: 6px;
+      background: var(--muted);
+      border-radius: 50%;
+      animation: typing-dot 1.4s ease-in-out infinite;
+    }
+
+    .typing span:nth-child(2) { animation-delay: 0.2s; }
+    .typing span:nth-child(3) { animation-delay: 0.4s; }
+
+    @keyframes typing-dot {
+      0%, 80%, 100% { transform: translateY(0); opacity: 0.4; }
+      40% { transform: translateY(-6px); opacity: 1; }
+    }
+
+    .card-input-row {
+      background: var(--surface-2);
+      border-top: 1px solid var(--border);
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .fake-input {
+      flex: 1;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 8px 12px;
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    .send-btn {
+      width: 32px; height: 32px;
+      background: var(--accent);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .send-btn svg { width: 14px; height: 14px; fill: #fff; }
+
+    .logos-section {
+      padding: 3rem 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      overflow: hidden;
+    }
+
+    .logos-label {
+      font-size: 0.8rem;
+      color: var(--muted);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 600;
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .logos-track {
+      display: flex;
+      gap: 3rem;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .logo-item {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: rgba(255,255,255,0.2);
+      letter-spacing: -0.02em;
+      transition: color 0.2s;
+    }
+
+    .logo-item:hover { color: rgba(255,255,255,0.5); }
+
+    .features-section { padding: 6rem 0; }
+
+    .section-label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent-light);
+      margin-bottom: 1rem;
+    }
+
+    .section-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(1.9rem, 3.5vw, 2.8rem);
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 1.2rem;
+    }
+
+    .section-desc {
+      color: var(--muted);
+      font-size: 1.05rem;
+      max-width: 520px;
+      line-height: 1.7;
+    }
+
+    .feature-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2rem;
+      height: 100%;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+
+    .feature-card:hover {
+      border-color: rgba(123, 92, 245, 0.4);
+      transform: translateY(-4px);
+    }
+
+    .feature-icon {
+      width: 48px; height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.2rem;
+    }
+
+    .feature-icon svg { width: 22px; height: 22px; }
+
+    .icon-purple { background: var(--accent-glow); }
+    .icon-blue { background: rgba(37, 99, 235, 0.15); }
+    .icon-green { background: rgba(16, 185, 129, 0.15); }
+    .icon-amber { background: rgba(245, 158, 11, 0.15); }
+
+    .feature-card h4 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 0.6rem;
+    }
+
+    .feature-card p {
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.65;
+      margin: 0;
+    }
+
+    .how-section {
+      padding: 6rem 0;
+      background: var(--surface);
+      border-radius: 0;
+    }
+
+    .step-number {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 800;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .step-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+      margin-bottom: 0.7rem;
+    }
+
+    .step-desc {
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.7;
+    }
+
+    .step-connector {
+      position: relative;
+      padding-left: 2rem;
+    }
+
+    .step-connector::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--accent), transparent);
+    }
+
+    .pricing-section { padding: 6rem 0; }
+
+    .pricing-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 2.2rem;
+      height: 100%;
+      transition: transform 0.3s;
+    }
+
+    .pricing-card:hover { transform: translateY(-4px); }
+
+    .pricing-card.featured {
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+
+    .plan-name {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+
+    .featured .plan-name { color: rgba(255,255,255,0.7); }
+
+    .plan-price {
+      font-family: 'Syne', sans-serif;
+      font-size: 2.8rem;
+      font-weight: 800;
+      line-height: 1;
+      margin-bottom: 0.3rem;
+    }
+
+    .plan-price sup {
+      font-size: 1.2rem;
+      vertical-align: super;
+    }
+
+    .plan-period {
+      color: var(--muted);
+      font-size: 0.85rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .featured .plan-period { color: rgba(255,255,255,0.7); }
+
+    .plan-divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 1.5rem 0;
+    }
+
+    .featured .plan-divider { border-color: rgba(255,255,255,0.2); }
+
+    .plan-feature {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 0.8rem;
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
+
+    .featured .plan-feature { color: rgba(255,255,255,0.85); }
+
+    .check-icon {
+      width: 16px; height: 16px;
+      margin-top: 2px;
+      flex-shrink: 0;
+      color: var(--accent-light);
+    }
+
+    .featured .check-icon { color: #fff; }
+
+    .btn-plan {
+      width: 100%;
+      padding: 0.8rem;
+      border-radius: 10px;
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 0.9rem;
+      margin-top: 1.8rem;
+      transition: all 0.2s;
+      border: none;
+    }
+
+    .btn-plan-outline {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+
+    .btn-plan-outline:hover {
+      border-color: rgba(255,255,255,0.25);
+      background: rgba(255,255,255,0.04);
+      color: var(--text);
+    }
+
+    .btn-plan-white {
+      background: #fff;
+      color: var(--accent);
+    }
+
+    .btn-plan-white:hover {
+      background: rgba(255,255,255,0.9);
+      color: var(--accent);
+    }
+
+    .testimonials-section { padding: 6rem 0; }
+
+    .testimonial-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.8rem;
+      height: 100%;
+    }
+
+    .stars {
+      display: flex;
+      gap: 3px;
+      margin-bottom: 1rem;
+    }
+
+    .star { color: #F59E0B; font-size: 0.85rem; }
+
+    .testimonial-text {
+      color: var(--text);
+      font-size: 0.92rem;
+      line-height: 1.7;
+      margin-bottom: 1.4rem;
+      font-style: italic;
+    }
+
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .author-avatar {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Syne', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .author-name {
+      font-weight: 600;
+      font-size: 0.88rem;
+      margin: 0;
+    }
+
+    .author-title {
+      color: var(--muted);
+      font-size: 0.78rem;
+      margin: 0;
+    }
+
+    .cta-section { padding: 6rem 0; }
+
+    .cta-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 5rem 3rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-blob {
+      position: absolute;
+      width: 500px; height: 500px;
+      border-radius: 50%;
+      background: var(--accent);
+      filter: blur(160px);
+      opacity: 0.12;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+
+    .cta-box h2 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 1rem;
+    }
+
+    .cta-box p {
+      color: var(--muted);
+      font-size: 1.05rem;
+      margin-bottom: 2.5rem;
+      max-width: 460px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 3rem 0 2rem;
+    }
+
+    .footer-brand {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--text);
+    }
+
+    .footer-brand span { color: var(--accent-light); }
+
+    .footer-tagline {
+      color: var(--muted);
+      font-size: 0.87rem;
+      margin-top: 0.4rem;
+    }
+
+    .footer-heading {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+
+    .footer-link {
+      display: block;
+      color: rgba(255,255,255,0.5);
+      font-size: 0.88rem;
+      text-decoration: none;
+      margin-bottom: 0.5rem;
+      transition: color 0.2s;
+    }
+
+    .footer-link:hover { color: var(--text); }
+
+    .footer-bottom {
+      border-top: 1px solid var(--border);
+      padding-top: 1.5rem;
+      margin-top: 2.5rem;
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg">
+    <div class="container">
+      <a class="navbar-brand" href="#">Nexo<span>ra</span></a>
+      <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu" style="filter: invert(1); opacity: 0.6;">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navMenu">
+        <ul class="navbar-nav mx-auto gap-1">
+          <li class="nav-item"><a class="nav-link" href="#">Fitur</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Cara Kerja</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Harga</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Blog</a></li>
+        </ul>
+        <div class="d-flex gap-2 align-items-center">
+          <a class="nav-link" href="#">Masuk</a>
+          <a class="nav-link btn-nav" href="#">Mulai Gratis →</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-bg">
+      <div class="hero-grid"></div>
+      <div class="hero-blob blob-1"></div>
+      <div class="hero-blob blob-2"></div>
+    </div>
+    <div class="container position-relative">
+      <div class="row align-items-center g-5">
+        <div class="col-lg-6">
+          <div class="badge-pill">
+            <span class="badge-dot"></span>
+            Baru: Integrasi Slack & Notion
+          </div>
+          <h1>
+            Kerja Lebih<br/>
+            Cerdas dengan<br/>
+            <span class="highlight">AI Asisten</span>
+          </h1>
+          <p class="hero-desc">
+            Nexora membantu tim Anda mengotomatisasi alur kerja, menjawab pertanyaan, dan menyelesaikan tugas kompleks — 10× lebih cepat dari biasanya.
+          </p>
+          <div class="d-flex flex-wrap gap-3">
+            <a href="#" class="btn btn-primary-custom">
+              Mulai Gratis
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="16" height="16"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+            <a href="#" class="btn btn-ghost">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+              Lihat Demo
+            </a>
+          </div>
+          <div class="hero-stats">
+            <div>
+              <div class="stat-num">50K+</div>
+              <div class="stat-label">Pengguna aktif</div>
+            </div>
+            <div>
+              <div class="stat-num">4.9★</div>
+              <div class="stat-label">Rating rata-rata</div>
+            </div>
+            <div>
+              <div class="stat-num">10×</div>
+              <div class="stat-label">Lebih produktif</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-6">
+          <div class="hero-card">
+            <div class="card-topbar">
+              <div class="dot dot-r"></div>
+              <div class="dot dot-y"></div>
+              <div class="dot dot-g"></div>
+              <span style="font-size: 0.78rem; color: var(--muted); margin-left: 8px; font-family: 'DM Sans';">Nexora AI — Chat</span>
+            </div>
+            <div class="card-body-custom">
+              <div class="msg-row">
+                <div class="avatar avatar-user">AZ</div>
+                <div class="bubble">Tolong buat ringkasan laporan Q3 kami dan identifikasi 3 peluang pertumbuhan utama.</div>
+              </div>
+              <div class="msg-row" style="flex-direction: row-reverse;">
+                <div class="avatar avatar-ai">N</div>
+                <div class="bubble bubble-user">
+                  <strong style="color: var(--accent-light);">Ringkasan Q3:</strong><br/>
+                  Pendapatan naik 34% YoY. Churn turun ke 2.1%. Top 3 peluang: ekspansi enterprise, pasar APAC, dan upsell fitur analytics. ✓
+                </div>
+              </div>
+              <div class="msg-row">
+                <div class="avatar avatar-ai">N</div>
+                <div class="bubble" style="padding: 0; border: none; background: none;">
+                  <div class="typing">
+                    <span></span><span></span><span></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card-input-row">
+              <div class="fake-input">Ketik perintah Anda...</div>
+              <div class="send-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M22 2L11 13M22 2L15 22l-4-9-9-4 20-7z"/></svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="logos-section">
+    <div class="container">
+      <p class="logos-label">Dipercaya oleh tim-tim terbaik</p>
+      <div class="logos-track">
+        <div class="logo-item">Gojek</div>
+        <div class="logo-item">Tokopedia</div>
+        <div class="logo-item">Traveloka</div>
+        <div class="logo-item">Ruangguru</div>
+        <div class="logo-item">Bukalapak</div>
+        <div class="logo-item">Koinworks</div>
+        <div class="logo-item">Kredivo</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="features-section">
+    <div class="container">
+      <div class="row mb-5">
+        <div class="col-lg-6">
+          <div class="section-label">Fitur Unggulan</div>
+          <h2 class="section-title">Semua yang dibutuhkan<br/>tim modern</h2>
+        </div>
+        <div class="col-lg-6 d-flex align-items-end">
+          <p class="section-desc">Dari otomasi dokumen hingga analisis data — Nexora menghadirkan AI langsung ke alur kerja Anda.</p>
+        </div>
+      </div>
+
+      <div class="row g-4">
+        <div class="col-md-6 col-xl-3">
+          <div class="feature-card">
+            <div class="feature-icon icon-purple">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#A78BFA" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z"/></svg>
+            </div>
+            <h4>AI Chat Pintar</h4>
+            <p>Tanya apapun, dapatkan jawaban kontekstual berbasis data perusahaan Anda secara real-time.</p>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-xl-3">
+          <div class="feature-card">
+            <div class="feature-icon icon-blue">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#60A5FA" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3v11.25A2.25 2.25 0 006 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0118 16.5h-2.25m-7.5 0h7.5m-7.5 0l-1 3m8.5-3l1 3"/></svg>
+            </div>
+            <h4>Analisis Dokumen</h4>
+            <p>Upload PDF, spreadsheet, atau laporan — AI akan merangkum dan menjawab pertanyaan Anda.</p>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-xl-3">
+          <div class="feature-card">
+            <div class="feature-icon icon-green">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#34D399" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 16.875h3.375m0 0h3.375m-3.375 0V13.5m0 3.375v3.375M6 10.5h2.25a2.25 2.25 0 002.25-2.25V6a2.25 2.25 0 00-2.25-2.25H6A2.25 2.25 0 003.75 6v2.25A2.25 2.25 0 006 10.5zm0 9.75h2.25A2.25 2.25 0 0010.5 18v-2.25a2.25 2.25 0 00-2.25-2.25H6a2.25 2.25 0 00-2.25 2.25V18A2.25 2.25 0 006 20.25zm9.75-9.75H18a2.25 2.25 0 002.25-2.25V6A2.25 2.25 0 0018 3.75h-2.25A2.25 2.25 0 0013.5 6v2.25a2.25 2.25 0 002.25 2.25z"/></svg>
+            </div>
+            <h4>Integrasi Mulus</h4>
+            <p>Terhubung dengan Slack, Notion, Google Workspace, Jira, dan 50+ tools yang sudah Anda gunakan.</p>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-xl-3">
+          <div class="feature-card">
+            <div class="feature-icon icon-amber">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#FBBF24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"/></svg>
+            </div>
+            <h4>Keamanan Enterprise</h4>
+            <p>Data Anda terenkripsi end-to-end. Compliance SOC 2, ISO 27001, dan GDPR terjamin.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="how-section">
+    <div class="container">
+      <div class="row mb-5">
+        <div class="col-lg-5">
+          <div class="section-label">Cara Kerja</div>
+          <h2 class="section-title">Aktif dalam<br/>3 langkah mudah</h2>
+        </div>
+      </div>
+
+      <div class="row g-5">
+        <div class="col-md-4">
+          <div class="step-number">01</div>
+          <div class="step-connector">
+            <h3 class="step-title">Buat Akun</h3>
+            <p class="step-desc">Daftar gratis dalam 30 detik. Tidak perlu kartu kredit. Langsung aktif dan siap digunakan.</p>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="step-number">02</div>
+          <div class="step-connector">
+            <h3 class="step-title">Hubungkan Tools</h3>
+            <p class="step-desc">Integrasikan Nexora dengan tools yang sudah Anda pakai — Slack, Notion, Drive, dan lainnya dalam hitungan klik.</p>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="step-number">03</div>
+          <div class="step-connector">
+            <h3 class="step-title">Mulai Bekerja</h3>
+            <p class="step-desc">Cukup ketik instruksi Anda. AI kami akan memahami konteks dan menyelesaikan tugas secara otomatis.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="pricing-section">
+    <div class="container">
+      <div class="text-center mb-5">
+        <div class="section-label">Harga</div>
+        <h2 class="section-title">Transparan. Terjangkau.</h2>
+        <p class="section-desc mx-auto">Mulai gratis, tingkatkan kapanpun. Tidak ada biaya tersembunyi.</p>
+      </div>
+
+      <div class="row g-4 justify-content-center">
+        <div class="col-md-4">
+          <div class="pricing-card">
+            <div class="plan-name">Starter</div>
+            <div class="plan-price"><sup>Rp</sup>0</div>
+            <div class="plan-period">Selamanya gratis</div>
+            <hr class="plan-divider" />
+            <div class="plan-feature"><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>100 pesan per bulan</div>
+            <div class="plan-feature"><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>2 integrasi</div>
+            <div class="plan-feature"><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Analisis dokumen dasar</div>
+            <div class="plan-feature"><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Support komunitas</div>
+            <button class="btn btn-plan btn-plan-outline">Mulai Gratis</button>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="pricing-card featured">
+            <div class="plan-name">Pro</div>
+            <div class="plan-price"><sup>Rp</sup>299K</div>
+            <div class="plan-period">per pengguna / bulan</div>
+            <hr class="plan-divider" />
+            <div class="plan-feature"><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Pesan tak terbatas</div>
+            <div class="plan-feature"><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>50+ integrasi</div>
+            <div class="plan-feature"><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Analisis dokumen lengkap</div>
+            <div class="plan-feature"><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Workspace tim kolaboratif</div>
+            <div class="plan-feature"><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Priority support 24/7</div>
+            <button class="btn btn-plan btn-plan-white">Coba 14 Hari Gratis</button>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="pricing-card">
+            <div class="plan-name">Enterprise</div>
+            <div class="plan-price" style="font-size: 2rem;">Custom</div>
+            <div class="plan-period">Harga spesial untuk tim besar</div>
+            <hr class="plan-divider" />
+            <div class="plan-feature"><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Semua fitur Pro</div>
+            <div class="plan-feature"><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Dedicated AI model</div>
+            <div class="plan-feature"><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>SSO & SAML</div>
+            <div class="plan-feature"><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>SLA guarantee & on-premise</div>
+            <button class="btn btn-plan btn-plan-outline">Hubungi Sales</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="testimonials-section">
+    <div class="container">
+      <div class="text-center mb-5">
+        <div class="section-label">Testimoni</div>
+        <h2 class="section-title">Yang kata mereka</h2>
+      </div>
+
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="testimonial-card">
+            <div class="stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+            <p class="testimonial-text">"Nexora mengubah cara tim engineering kami bekerja. Review PR yang dulu 2 jam sekarang selesai 15 menit dengan bantuan AI-nya."</p>
+            <div class="testimonial-author">
+              <div class="author-avatar" style="background: linear-gradient(135deg, #7B5CF5, #2563EB);">BW</div>
+              <div>
+                <p class="author-name">Bayu Wibowo</p>
+                <p class="author-title">CTO, Startup Fintech</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="testimonial-card">
+            <div class="stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+            <p class="testimonial-text">"Fitur integrasi Notion-nya luar biasa. Semua knowledge base tim bisa langsung diakses AI. Onboarding karyawan baru jadi 3× lebih cepat."</p>
+            <div class="testimonial-author">
+              <div class="author-avatar" style="background: linear-gradient(135deg, #10B981, #0D9488);">SR</div>
+              <div>
+                <p class="author-name">Sari Rahayu</p>
+                <p class="author-title">Head of People, E-commerce</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="testimonial-card">
+            <div class="stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+            <p class="testimonial-text">"ROI-nya jelas. Tim product kami menghemat 20+ jam per minggu hanya dari riset kompetitor dan pembuatan PRD otomatis."</p>
+            <div class="testimonial-author">
+              <div class="author-avatar" style="background: linear-gradient(135deg, #F59E0B, #EF4444);">DP</div>
+              <div>
+                <p class="author-name">Dimas Pratama</p>
+                <p class="author-title">VP Product, SaaS Company</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <div class="container">
+      <div class="cta-box">
+        <div class="cta-blob"></div>
+        <div class="position-relative">
+          <div class="section-label">Mulai Sekarang</div>
+          <h2>Siap kerja 10×<br/>lebih cepat?</h2>
+          <p>Bergabung dengan 50.000+ profesional yang sudah merasakan manfaat Nexora. Gratis, tidak perlu kartu kredit.</p>
+          <div class="d-flex gap-3 justify-content-center flex-wrap">
+            <a href="#" class="btn btn-primary-custom" style="font-size: 1rem; padding: 0.9rem 2.2rem;">Mulai Gratis Sekarang →</a>
+            <a href="#" class="btn btn-ghost" style="font-size: 1rem; padding: 0.9rem 2rem;">Jadwalkan Demo</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="row g-4 mb-4">
+        <div class="col-lg-4">
+          <div class="footer-brand">Nexo<span>ra</span></div>
+          <p class="footer-tagline">AI asisten untuk tim modern Indonesia.</p>
+        </div>
+
+        <div class="col-6 col-lg-2">
+          <div class="footer-heading">Produk</div>
+          <a href="#" class="footer-link">Fitur</a>
+          <a href="#" class="footer-link">Integrasi</a>
+          <a href="#" class="footer-link">Harga</a>
+          <a href="#" class="footer-link">Changelog</a>
+        </div>
+
+        <div class="col-6 col-lg-2">
+          <div class="footer-heading">Perusahaan</div>
+          <a href="#" class="footer-link">Tentang Kami</a>
+          <a href="#" class="footer-link">Blog</a>
+          <a href="#" class="footer-link">Karier</a>
+          <a href="#" class="footer-link">Press</a>
+        </div>
+
+        <div class="col-6 col-lg-2">
+          <div class="footer-heading">Dukungan</div>
+          <a href="#" class="footer-link">Dokumentasi</a>
+          <a href="#" class="footer-link">Status</a>
+          <a href="#" class="footer-link">Komunitas</a>
+          <a href="#" class="footer-link">Hubungi Kami</a>
+        </div>
+
+        <div class="col-6 col-lg-2">
+          <div class="footer-heading">Legal</div>
+          <a href="#" class="footer-link">Privasi</a>
+          <a href="#" class="footer-link">Syarat & Ketentuan</a>
+          <a href="#" class="footer-link">Keamanan</a>
+        </div>
+      </div>
+
+      <div class="footer-bottom d-flex flex-wrap justify-content-between align-items-center gap-2">
+        <span>© 2025 Nexora. Dibuat dengan ♥ di Jakarta.</span>
+        <span>Bahasa: Indonesia</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
